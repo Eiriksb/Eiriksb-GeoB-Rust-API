@@ -413,12 +413,18 @@ fn find_best_match(query: &str, available_queries: &[String]) -> Option<String> 
 fn rocket() -> _ {
     let config = Config::release_default();
 
+    // Retrieve the PORT environment variable and parse it to an integer
+    let port = std::env::var("PORT")
+        .ok()
+        .and_then(|p| p.parse().ok())
+        .unwrap_or(8081);
+
     rocket::custom(config)
         .mount("/", routes![get_geojson, update_data, check_geojsons, autocomplete])
         .attach(CORS)
         .configure(rocket::Config {
             address: "0.0.0.0".parse().unwrap(),
-            port: 8081,
+            port,
             ..rocket::Config::default()
         })  
 }
