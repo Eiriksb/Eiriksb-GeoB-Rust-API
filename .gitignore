@@ -1,0 +1,19 @@
+# Compiled files
+/target/
+
+# Dependency directories
+Cargo.lock
+Cargo.toml.orig
+Cargo.toml.bkp
+
+# Build artifacts
+*.rs.bk
+
+# Editor-specific files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Generated documentation
+/target/doc/
