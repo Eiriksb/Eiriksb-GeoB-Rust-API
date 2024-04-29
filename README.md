@@ -33,3 +33,14 @@ Currently this should just run using either fly.io or heroku pretty much nativle
 
 # First Startup
 During Inital run the API wont have the data it needs to return any bounderies. You will have to go to the localhost-link/update-data to update OR install the data. This will fetch the latest release from https://www.geoboundaries.org/globalDownloads.html, Extract all locations to seperate geoJson files and after this install (Which might take some time depending on internet speed and processing speed) You will be ready to run it and retunr the lates geo bonderies!
+
+# Usage 
+You will mainly be using the 
+```
+/geojson?iso3=NOR&query=Molde
+```
+Which in this case will retunr the bounderies for Molde, Norway. The iso3 can in some cases also just be the country name like Australia, or Norway. But does NOT work with countries with multiple names like United Stated and United Kingdom. The query can be anything really if you want a state like Agder in Norway, you would do: 
+```
+/geojson?iso3=NOR&query=Agder
+```
+And this would return the boundery for that state too. So the query can be either a state/region or a city. The API will figure out what you want by itself by comparing the name to all the places under ADM1 and ADM2 for that country.
