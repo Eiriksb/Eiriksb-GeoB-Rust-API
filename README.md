@@ -1,46 +1,58 @@
 # GeoB-Rust-API
-A Simple Rust API that lets you easily find the bounderies you want Country State or City. This uses data downloaded from https://www.geoboundaries.org. This API is just a simple way of returning one of the many shapes that are provided by geobounderies.org.
 
-## Running locally
+A simple Rust API that lets you easily find the boundaries you need, whether it's for a country, state, or city. This API uses data downloaded from [https://www.geoboundaries.org](https://www.geoboundaries.org) and provides a straightforward way to access the various shapes available there.
 
-To run this API you will need to have Rust installed her is how to [Install Rust](https://www.rust-lang.org/tools/install) 
+## Running Locally
 
-After this is done you can inside the root directory run
-```sh
+To run this API, you'll need to have Rust installed. Here's how to [Install Rust](https://www.rust-lang.org/tools/install).
+
+Once Rust is installed, navigate to the root directory of the project and run the following commands:
+
+```bash
 cargo build
-```
-then
-```sh
 cargo run
 ```
 
-to run it! This will start the API on localhost.
+This will build and start the API on your local machine (localhost).
 
-## Running with docker
+## Running with Docker
 
-To run the API using docker you will first have to build it using: 
-```sh
+To run the API using Docker, first build the Docker image:
+
+```bash
 docker build -t geob-api .
 ```
 
-and then 
-```sh
+Then, run the Docker container:
+
+```bash
 docker run --name your-container-name -p 8081:8081 geob-api
 ```
 
+Make sure to replace `your-container-name` with a suitable name for your container.
+
 ## Running on the Cloud
-Currently this should just run using either fly.io or heroku pretty much nativley. So it would just need to be connected to one of these services and setup as the provider want you too.
 
-# First Startup
-During Inital run the API wont have the data it needs to return any bounderies. You will have to go to the localhost-link/update-data to update OR install the data. This will fetch the latest release from https://www.geoboundaries.org/globalDownloads.html, Extract all locations to seperate geoJson files and after this install (Which might take some time depending on internet speed and processing speed) You will be ready to run it and retunr the lates geo bonderies!
+This API should run natively on cloud platforms like Fly.io or Heroku. Simply connect your project to your preferred provider and follow their setup instructions.
 
-# Usage 
-You will mainly be using the 
+## First Startup
+
+On the initial run, the API won't have the necessary data to return any boundaries. You'll need to visit `localhost-link/update-data` (replace `localhost-link` with your actual localhost URL) to update or install the data. This process will fetch the latest release from [https://www.geoboundaries.org/globalDownloads.html](https://www.geoboundaries.org/globalDownloads.html), extract all locations into separate GeoJSON files, and install them. This may take some time, depending on your internet speed and processing power. Once the installation is complete, you'll be ready to use the API to retrieve the latest geoboundaries.
+
+## Usage
+
+The main endpoint you'll be using is:
+
 ```
 /geojson?iso3=NOR&query=Molde
 ```
-Which in this case will retunr the bounderies for Molde, Norway. The iso3 can in some cases also just be the country name like Australia, or Norway. But does NOT work with countries with multiple names like United Stated and United Kingdom. The query can be anything really if you want a state like Agder in Norway, you would do: 
+
+In this example, the API will return the boundaries for Molde, Norway. The `iso3` parameter can sometimes be the full country name (e.g., Australia, Norway) but **does not** work with countries that have multiple names, such as the United States or the United Kingdom.
+
+The `query` parameter can be the name of a state/region or a city. The API will automatically determine what you're looking for by comparing the query to all ADM1 (administrative level 1, usually states/provinces) and ADM2 (administrative level 2, usually counties/districts) locations for the specified country.
+
+For example, to get the boundary for the Agder state in Norway, you would use:
+
 ```
 /geojson?iso3=NOR&query=Agder
 ```
-And this would return the boundery for that state too. So the query can be either a state/region or a city. The API will figure out what you want by itself by comparing the name to all the places under ADM1 and ADM2 for that country.
